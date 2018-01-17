@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	apiURLBase = "localhost:8001"
+	apiURLBase = "localhost:8001/"
 )
 
 var client *http.Client
@@ -25,7 +25,7 @@ func buildRequest(method, path string, query url.Values, b io.Reader) *http.Requ
 	}
 
 	u := &url.URL{
-		Scheme:   "https",
+		Scheme:   "http",
 		Path:     path,
 		RawQuery: query.Encode(),
 	}

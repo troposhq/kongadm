@@ -22,7 +22,7 @@ func apiList(cmd *cobra.Command, args []string) {
 		fmt.Println(err)
 	}
 
-	fmt.Println("Results are...", results)
+	fmt.Printf("Results are... %+v", results)
 }
 
 var apiCmd = &cobra.Command{
