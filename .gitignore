@@ -21,3 +21,6 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
+
+# Binary output
+konga
