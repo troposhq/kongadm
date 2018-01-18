@@ -26,9 +26,7 @@ type API struct {
 // ListAPI lists the API objects in Kong
 func ListAPI() (results ListAPIResult, err error) {
 	req := buildRequest("GET", apiURLBase+"apis", nil, nil)
-
 	err = makeRequest(req, &results)
-
 	return results, err
 }
 
