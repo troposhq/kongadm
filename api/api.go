@@ -25,9 +25,16 @@ type API struct {
 
 // ListAPI lists the API objects in Kong
 func ListAPI() (results ListAPIResult, err error) {
-	r := buildRequest("GET", apiURLBase+"apis", nil, nil)
+	req := buildRequest("GET", apiURLBase+"apis", nil, nil)
 
-	err = makeRequest(r, &results)
+	err = makeRequest(req, &results)
 
 	return results, err
+}
+
+// GetAPI fetches an API by name or id
+func GetAPI(nameOrID string) (r API, err error) {
+	req := buildRequest("GET", apiURLBase+"apis/"+nameOrID, nil, nil)
+	err = makeRequest(req, &r)
+	return r, err
 }
