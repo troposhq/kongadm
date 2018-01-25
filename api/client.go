@@ -9,9 +9,8 @@ import (
 	"net/url"
 )
 
-const (
-	apiURLBase = "localhost:8001/"
-)
+// APIURLBase is the url where kong is hosted
+var APIURLBase string
 
 var client *http.Client
 

@@ -15,7 +15,7 @@ type Consumer struct {
 
 // ListConsumers fetches Consumers from the Kong API
 func ListConsumers() (r ListConsumersResult, err error) {
-	req := buildRequest("GET", apiURLBase+"consumers", nil, nil)
+	req := buildRequest("GET", APIURLBase+"/consumers", nil, nil)
 	err = makeRequest(req, &r)
 	return r, err
 }
