@@ -1,5 +1,7 @@
 package api
 
+import "strings"
+
 // ListAPIResult is the structure returned from the /apis route in Kong
 type ListAPIResult struct {
 	Total int   `json:"total"`
@@ -33,6 +35,14 @@ func ListAPI() (results ListAPIResult, err error) {
 // GetAPI fetches an API by name or id
 func GetAPI(nameOrID string) (r API, err error) {
 	req := buildRequest("GET", APIURLBase+"/apis"+nameOrID, nil, nil)
+	err = makeRequest(req, &r)
+	return r, err
+}
+
+// CreateAPI creates a new API object in Kong
+func CreateAPI(b string) (r API, err error) {
+	req := buildRequest("POST", APIURLBase+"/apis", nil, strings.NewReader(b))
+	req.Header.Add("Content-Type", "application/json")
 	err = makeRequest(req, &r)
 	return r, err
 }

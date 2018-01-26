@@ -1,0 +1,15 @@
+{
+    "uris": [
+        "/example"
+    ],
+    "http_if_terminated": false,
+    "https_only": false,
+    "name": "example-api",
+    "preserve_host": false,
+    "retries": 5,
+    "strip_uri": true,
+    "upstream_connect_timeout": 60000,
+    "upstream_read_timeout": 60000,
+    "upstream_send_timeout": 60000,
+    "upstream_url": "http://jsonplaceholder.typicode.com/posts"
+}
