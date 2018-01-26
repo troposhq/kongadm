@@ -46,3 +46,10 @@ func CreateAPI(b string) (r API, err error) {
 	err = makeRequest(req, &r)
 	return r, err
 }
+
+// DeleteAPI will delete an API object in Kong
+func DeleteAPI(nameOrID string) (e error) {
+	req := buildRequest("DELETE", APIURLBase+"/apis/"+nameOrID, nil, nil)
+	e = makeRequest(req, nil)
+	return e
+}
