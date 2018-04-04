@@ -2,8 +2,8 @@ package api
 
 import "strings"
 
-// ListServiceResult is the structure returned from the /apis route in Kong
-type ListServiceResult struct {
+// ListServicesResult is the structure returned from the /apis route in Kong
+type ListServicesResult struct {
 	Total int   `json:"total"`
 	Data  []API `json:"data"`
 }
@@ -25,21 +25,21 @@ type Service struct {
 }
 
 // ListServices lists the Service objects in Kong
-func ListServices() (results ListAPIResult, err error) {
+func ListServices() (results ListServicesResult, err error) {
 	req := buildRequest("GET", APIURLBase+"/services", nil, nil)
 	err = makeRequest(req, &results)
 	return results, err
 }
 
 // GetService fetches an Service by name or id
-func GetService(nameOrID string) (r API, err error) {
+func GetService(nameOrID string) (r Service, err error) {
 	req := buildRequest("GET", APIURLBase+"/services/"+nameOrID, nil, nil)
 	err = makeRequest(req, &r)
 	return r, err
 }
 
 // CreateService creates a new Service object in Kong
-func CreateService(b string) (r API, err error) {
+func CreateService(b string) (r Service, err error) {
 	req := buildRequest("POST", APIURLBase+"/services", nil, strings.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")
 	err = makeRequest(req, &r)

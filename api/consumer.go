@@ -23,14 +23,14 @@ func ListConsumers() (r ListConsumersResult, err error) {
 }
 
 // GetConsumer fetches an API by name or id
-func GetConsumer(usernameOrID string) (r API, err error) {
+func GetConsumer(usernameOrID string) (r Consumer, err error) {
 	req := buildRequest("GET", APIURLBase+"/consumers/"+usernameOrID, nil, nil)
 	err = makeRequest(req, &r)
 	return r, err
 }
 
 // CreateConsumer creates a new Consumer object in Kong
-func CreateConsumer(b string) (r API, err error) {
+func CreateConsumer(b string) (r Consumer, err error) {
 	req := buildRequest("POST", APIURLBase+"/consumers", nil, strings.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")
 	err = makeRequest(req, &r)
