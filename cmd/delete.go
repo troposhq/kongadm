@@ -18,9 +18,33 @@ func deleteAPI(cmd *cobra.Command, args []string) {
 	fmt.Printf("Successfully deleted API")
 }
 
+func deleteConsumer(cmd *cobra.Command, args []string) {
+	err := api.DeleteConsumer(args[0])
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("Successfully deleted Consumer")
+}
+
+func deleteService(cmd *cobra.Command, args []string) {
+	err := api.DeleteService(args[0])
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("Successfully deleted Service")
+}
+
 func init() {
 	rootCmd.AddCommand(deleteCmd)
 	deleteCmd.AddCommand(deleteAPICmd)
+	deleteCmd.AddCommand(deleteConsumerCmd)
+	deleteCmd.AddCommand(deleteServiceCmd)
 }
 
 var deleteCmd = &cobra.Command{
@@ -32,4 +56,18 @@ var deleteAPICmd = &cobra.Command{
 	Short: "Delete an API in Kong",
 	Args:  cobra.ExactArgs(1),
 	Run:   deleteAPI,
+}
+
+var deleteConsumerCmd = &cobra.Command{
+	Use:   "consumer",
+	Short: "Delete a Consumer in Kong",
+	Args:  cobra.ExactArgs(1),
+	Run:   deleteConsumer,
+}
+
+var deleteServiceCmd = &cobra.Command{
+	Use:   "service",
+	Short: "Delete a Service in Kong",
+	Args:  cobra.ExactArgs(1),
+	Run:   deleteService,
 }

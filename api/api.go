@@ -34,7 +34,7 @@ func ListAPI() (results ListAPIResult, err error) {
 
 // GetAPI fetches an API by name or id
 func GetAPI(nameOrID string) (r API, err error) {
-	req := buildRequest("GET", APIURLBase+"/apis"+nameOrID, nil, nil)
+	req := buildRequest("GET", APIURLBase+"/apis/"+nameOrID, nil, nil)
 	err = makeRequest(req, &r)
 	return r, err
 }

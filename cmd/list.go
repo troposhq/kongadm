@@ -28,13 +28,25 @@ func listConsumers(cmd *cobra.Command, args []string) {
 	fmt.Printf("%+v", r)
 }
 
+func listServices(cmd *cobra.Command, args []string) {
+	r, err := api.ListServices()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", r)
+}
+
 func init() {
 	// konga list
 	rootCmd.AddCommand(listCmd)
 	// konga list api
 	listCmd.AddCommand(listAPICmd)
-	// konga list consumers
+	// konga list consumer
 	listCmd.AddCommand(listConsumersCmd)
+	// konga list service
+	listCmd.AddCommand(listServicesCmd)
 }
 
 var listCmd = &cobra.Command{
@@ -51,4 +63,10 @@ var listConsumersCmd = &cobra.Command{
 	Use:   "consumer",
 	Short: "List Consumer objects",
 	Run:   listConsumers,
+}
+
+var listServicesCmd = &cobra.Command{
+	Use:   "service",
+	Short: "List Service objects",
+	Run:   listServices,
 }
