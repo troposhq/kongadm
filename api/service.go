@@ -4,8 +4,8 @@ import "strings"
 
 // ListServicesResult is the structure returned from the /apis route in Kong
 type ListServicesResult struct {
-	Total int   `json:"total"`
-	Data  []API `json:"data"`
+	Total int       `json:"total"`
+	Data  []Service `json:"data"`
 }
 
 // Service is an individual API object
