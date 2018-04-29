@@ -1,5 +1,7 @@
 package api
 
+import "strings"
+
 // ListRoutesResult is the structure returned from the /routes route in Kong
 type ListRoutesResult struct {
 	Data []Route `json:"data"`
@@ -16,6 +18,14 @@ type Route struct {
 	Paths         []string `json:"paths"`
 	RegexPriority int      `json:"regex_priority"`
 	PreserveHost  bool     `json:"preserve_host"`
+}
+
+// CreateRoute create a new Kong Route object
+func CreateRoute(b string) (r Route, err error) {
+	req := buildRequest("POST", APIURLBase+"/routes", nil, strings.NewReader(b))
+	req.Header.Add("Content-Type", "application/json")
+	err = makeRequest(req, &r)
+	return r, err
 }
 
 // ListRoutes lists the Route objects in Kong
