@@ -3,6 +3,6 @@
   "methods": ["POST"],
   "paths": ["/v1/users"],
   "service": {
-    "id": "00fb2ed5-85e4-422d-b864-d224fb496d10"
+    "id": "12ec1ebc-30ee-459a-97b0-59e8104360c0"
   }
 }
