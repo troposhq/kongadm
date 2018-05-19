@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/aloisbarreras/konga/api"
 	"github.com/spf13/cobra"
+	"github.com/troposhq/konga/api"
 )
 
 var filePath string

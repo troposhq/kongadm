@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/aloisbarreras/konga/api"
 	"github.com/spf13/cobra"
+	"github.com/troposhq/konga/api"
 )
 
 func listAPI(cmd *cobra.Command, args []string) {

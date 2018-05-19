@@ -3,8 +3,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/aloisbarreras/konga/api"
 	"github.com/spf13/cobra"
+	"github.com/troposhq/konga/api"
 )
 
 var rootCmd = &cobra.Command{
