@@ -13,8 +13,11 @@ var rootCmd = &cobra.Command{
 	Long:  "A CLI tool for interacting the the Kong API",
 }
 
+var client *api.KongAdminAPIClient
+
 func init() {
-	rootCmd.PersistentFlags().StringVar(&api.APIURLBase, "url", "localhost:8001", "URL for the Kong Admin API")
+	apiURLBase := rootCmd.PersistentFlags().String("url", "localhost:8001", "URL for the Kong Admin API")
+	client = api.New(*apiURLBase)
 }
 
 // Execute is the entrypoint for the CLI called from the main function

@@ -4,11 +4,10 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/troposhq/konga/api"
 )
 
 func listAPI(cmd *cobra.Command, args []string) {
-	results, err := api.ListAPI()
+	results, err := client.ListAPI()
 
 	if err != nil {
 		fmt.Println(err)
@@ -19,7 +18,7 @@ func listAPI(cmd *cobra.Command, args []string) {
 }
 
 func listConsumers(cmd *cobra.Command, args []string) {
-	r, err := api.ListConsumers()
+	r, err := client.ListConsumers()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -29,7 +28,7 @@ func listConsumers(cmd *cobra.Command, args []string) {
 }
 
 func listServices(cmd *cobra.Command, args []string) {
-	r, err := api.ListServices()
+	r, err := client.ListServices()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -39,7 +38,7 @@ func listServices(cmd *cobra.Command, args []string) {
 }
 
 func listRoutes(cmd *cobra.Command, args []string) {
-	r, err := api.ListRoutes()
+	r, err := client.ListRoutes()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -49,7 +48,7 @@ func listRoutes(cmd *cobra.Command, args []string) {
 }
 
 func listPlugins(cmd *cobra.Command, args []string) {
-	r, err := api.ListPlugins()
+	r, err := client.ListPlugins()
 	if err != nil {
 		fmt.Println(err)
 		return

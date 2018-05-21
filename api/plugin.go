@@ -15,8 +15,8 @@ type Plugin struct {
 }
 
 // ListPlugins lists the Plugin objects in Kong
-func ListPlugins() (results ListPluginsResult, err error) {
-	req := buildRequest("GET", APIURLBase+"/plugins", nil, nil)
-	err = makeRequest(req, &results)
+func (c *KongAdminAPIClient) ListPlugins() (results ListPluginsResult, err error) {
+	req := buildRequest("GET", c.APIURLBase+"/plugins", nil, nil)
+	err = c.makeRequest(req, &results)
 	return results, err
 }

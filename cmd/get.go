@@ -4,12 +4,11 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/troposhq/konga/api"
 )
 
 func getAPI(cmd *cobra.Command, args []string) {
 	nameOrID := args[0]
-	api, err := api.GetAPI(nameOrID)
+	api, err := client.GetAPI(nameOrID)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -20,7 +19,7 @@ func getAPI(cmd *cobra.Command, args []string) {
 
 func getConsumer(cmd *cobra.Command, args []string) {
 	usernameOrID := args[0]
-	consumer, err := api.GetConsumer(usernameOrID)
+	consumer, err := client.GetConsumer(usernameOrID)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -31,7 +30,7 @@ func getConsumer(cmd *cobra.Command, args []string) {
 
 func getService(cmd *cobra.Command, args []string) {
 	nameOrID := args[0]
-	service, err := api.GetService(nameOrID)
+	service, err := client.GetService(nameOrID)
 	if err != nil {
 		fmt.Println(err)
 		return

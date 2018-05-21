@@ -26,30 +26,30 @@ type API struct {
 }
 
 // ListAPI lists the API objects in Kong
-func ListAPI() (results ListAPIResult, err error) {
-	req := buildRequest("GET", APIURLBase+"/apis", nil, nil)
-	err = makeRequest(req, &results)
+func (c *KongAdminAPIClient) ListAPI() (results ListAPIResult, err error) {
+	req := buildRequest("GET", c.APIURLBase+"/apis", nil, nil)
+	err = c.makeRequest(req, &results)
 	return results, err
 }
 
 // GetAPI fetches an API by name or id
-func GetAPI(nameOrID string) (r API, err error) {
-	req := buildRequest("GET", APIURLBase+"/apis/"+nameOrID, nil, nil)
-	err = makeRequest(req, &r)
+func (c *KongAdminAPIClient) GetAPI(nameOrID string) (r API, err error) {
+	req := buildRequest("GET", c.APIURLBase+"/apis/"+nameOrID, nil, nil)
+	err = c.makeRequest(req, &r)
 	return r, err
 }
 
 // CreateAPI creates a new API object in Kong
-func CreateAPI(b string) (r API, err error) {
-	req := buildRequest("POST", APIURLBase+"/apis", nil, strings.NewReader(b))
+func (c *KongAdminAPIClient) CreateAPI(b string) (r API, err error) {
+	req := buildRequest("POST", c.APIURLBase+"/apis", nil, strings.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")
-	err = makeRequest(req, &r)
+	err = c.makeRequest(req, &r)
 	return r, err
 }
 
 // DeleteAPI will delete an API object in Kong
-func DeleteAPI(nameOrID string) (e error) {
-	req := buildRequest("DELETE", APIURLBase+"/apis/"+nameOrID, nil, nil)
-	e = makeRequest(req, nil)
+func (c *KongAdminAPIClient) DeleteAPI(nameOrID string) (e error) {
+	req := buildRequest("DELETE", c.APIURLBase+"/apis/"+nameOrID, nil, nil)
+	e = c.makeRequest(req, nil)
 	return e
 }

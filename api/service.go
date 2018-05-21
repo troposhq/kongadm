@@ -25,30 +25,30 @@ type Service struct {
 }
 
 // ListServices lists the Service objects in Kong
-func ListServices() (results ListServicesResult, err error) {
-	req := buildRequest("GET", APIURLBase+"/services", nil, nil)
-	err = makeRequest(req, &results)
+func (c *KongAdminAPIClient) ListServices() (results ListServicesResult, err error) {
+	req := buildRequest("GET", c.APIURLBase+"/services", nil, nil)
+	err = c.makeRequest(req, &results)
 	return results, err
 }
 
 // GetService fetches an Service by name or id
-func GetService(nameOrID string) (r Service, err error) {
-	req := buildRequest("GET", APIURLBase+"/services/"+nameOrID, nil, nil)
-	err = makeRequest(req, &r)
+func (c *KongAdminAPIClient) GetService(nameOrID string) (r Service, err error) {
+	req := buildRequest("GET", c.APIURLBase+"/services/"+nameOrID, nil, nil)
+	err = c.makeRequest(req, &r)
 	return r, err
 }
 
 // CreateService creates a new Service object in Kong
-func CreateService(b string) (r Service, err error) {
-	req := buildRequest("POST", APIURLBase+"/services", nil, strings.NewReader(b))
+func (c *KongAdminAPIClient) CreateService(b string) (r Service, err error) {
+	req := buildRequest("POST", c.APIURLBase+"/services", nil, strings.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")
-	err = makeRequest(req, &r)
+	err = c.makeRequest(req, &r)
 	return r, err
 }
 
 // DeleteService will delete an Service object in Kong
-func DeleteService(nameOrID string) (e error) {
-	req := buildRequest("DELETE", APIURLBase+"/services/"+nameOrID, nil, nil)
-	e = makeRequest(req, nil)
+func (c *KongAdminAPIClient) DeleteService(nameOrID string) (e error) {
+	req := buildRequest("DELETE", c.APIURLBase+"/services/"+nameOrID, nil, nil)
+	e = c.makeRequest(req, nil)
 	return e
 }

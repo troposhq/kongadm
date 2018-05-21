@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/troposhq/konga/api"
 )
 
 var filePath string
@@ -19,7 +18,7 @@ func createAPI(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 
-		api, e := api.CreateAPI(string(file))
+		api, e := client.CreateAPI(string(file))
 		if e != nil {
 			fmt.Println("Error creating API: ", e)
 		}
@@ -36,7 +35,7 @@ func createConsumer(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 
-		api, e := api.CreateConsumer(string(file))
+		api, e := client.CreateConsumer(string(file))
 		if e != nil {
 			fmt.Println("Error creating Consumer: ", e)
 		}
@@ -53,7 +52,7 @@ func createService(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 
-		service, e := api.CreateService(string(file))
+		service, e := client.CreateService(string(file))
 		if e != nil {
 			fmt.Println("Error creating Service: ", e)
 		}
@@ -70,7 +69,7 @@ func createRoute(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 
-		route, e := api.CreateRoute(string(file))
+		route, e := client.CreateRoute(string(file))
 		if e != nil {
 			fmt.Println("Error creating Route: ", e)
 		}

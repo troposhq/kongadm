@@ -21,16 +21,16 @@ type Route struct {
 }
 
 // CreateRoute create a new Kong Route object
-func CreateRoute(b string) (r Route, err error) {
-	req := buildRequest("POST", APIURLBase+"/routes", nil, strings.NewReader(b))
+func (c *KongAdminAPIClient) CreateRoute(b string) (r Route, err error) {
+	req := buildRequest("POST", c.APIURLBase+"/routes", nil, strings.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")
-	err = makeRequest(req, &r)
+	err = c.makeRequest(req, &r)
 	return r, err
 }
 
 // ListRoutes lists the Route objects in Kong
-func ListRoutes() (results ListRoutesResult, err error) {
-	req := buildRequest("GET", APIURLBase+"/routes", nil, nil)
-	err = makeRequest(req, &results)
+func (c *KongAdminAPIClient) ListRoutes() (results ListRoutesResult, err error) {
+	req := buildRequest("GET", c.APIURLBase+"/routes", nil, nil)
+	err = c.makeRequest(req, &results)
 	return results, err
 }

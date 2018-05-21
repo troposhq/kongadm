@@ -9,15 +9,6 @@ import (
 	"net/url"
 )
 
-// APIURLBase is the url where kong is hosted
-var APIURLBase string
-
-var client *http.Client
-
-func init() {
-	client = &http.Client{}
-}
-
 func buildRequest(method, path string, query url.Values, b io.Reader) *http.Request {
 	if query == nil {
 		query = url.Values{}
@@ -38,8 +29,8 @@ func buildRequest(method, path string, query url.Values, b io.Reader) *http.Requ
 	return r
 }
 
-func makeRequest(r *http.Request, d interface{}) error {
-	res, err := client.Do(r)
+func (c *KongAdminAPIClient) makeRequest(r *http.Request, d interface{}) error {
+	res, err := c.client.Do(r)
 
 	if err != nil {
 		return err

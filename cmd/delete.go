@@ -4,11 +4,10 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/troposhq/konga/api"
 )
 
 func deleteAPI(cmd *cobra.Command, args []string) {
-	err := api.DeleteAPI(args[0])
+	err := client.DeleteAPI(args[0])
 
 	if err != nil {
 		fmt.Println(err)
@@ -19,7 +18,7 @@ func deleteAPI(cmd *cobra.Command, args []string) {
 }
 
 func deleteConsumer(cmd *cobra.Command, args []string) {
-	err := api.DeleteConsumer(args[0])
+	err := client.DeleteConsumer(args[0])
 
 	if err != nil {
 		fmt.Println(err)
@@ -30,7 +29,7 @@ func deleteConsumer(cmd *cobra.Command, args []string) {
 }
 
 func deleteService(cmd *cobra.Command, args []string) {
-	err := api.DeleteService(args[0])
+	err := client.DeleteService(args[0])
 
 	if err != nil {
 		fmt.Println(err)
