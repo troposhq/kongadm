@@ -7,9 +7,6 @@ import (
 
 func TestAssociateConsumers(t *testing.T) {
 	client := New("localhost:8001")
-	req := AssociateConsumerRequest{
-		Group: "admins",
-	}
-	_, e := client.AssociateConsumers("d334c28c-11ab-4c7e-8464-50ef660e82fd", req)
+	_, e := client.AssociateConsumer("d334c28c-11ab-4c7e-8464-50ef660e82fd", "admins")
 	fmt.Println(e)
 }

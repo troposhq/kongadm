@@ -27,14 +27,14 @@ type API struct {
 
 // ListAPI lists the API objects in Kong
 func (c *KongAdminAPIClient) ListAPI() (results ListAPIResult, err error) {
-	req := buildRequest("GET", c.APIURLBase+"/apis", nil, nil)
+	req := c.buildRequest("GET", "/apis", nil, nil)
 	err = c.makeRequest(req, &results)
 	return results, err
 }
 
 // GetAPI fetches an API by name or id
 func (c *KongAdminAPIClient) GetAPI(nameOrID string) (r API, err error) {
-	req := buildRequest("GET", c.APIURLBase+"/apis/"+nameOrID, nil, nil)
+	req := c.buildRequest("GET", "/apis/"+nameOrID, nil, nil)
 	err = c.makeRequest(req, &r)
 	return r, err
 }
@@ -42,7 +42,7 @@ func (c *KongAdminAPIClient) GetAPI(nameOrID string) (r API, err error) {
 // CreateAPI creates a new API object in Kong
 func (c *KongAdminAPIClient) CreateAPI(b string) (r API, err error) {
 
-	req := buildRequest("POST", c.APIURLBase+"/apis", nil, strings.NewReader(b))
+	req := c.buildRequest("POST", "/apis", nil, strings.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")
 	err = c.makeRequest(req, &r)
 	return r, err
@@ -50,7 +50,7 @@ func (c *KongAdminAPIClient) CreateAPI(b string) (r API, err error) {
 
 // DeleteAPI will delete an API object in Kong
 func (c *KongAdminAPIClient) DeleteAPI(nameOrID string) (e error) {
-	req := buildRequest("DELETE", c.APIURLBase+"/apis/"+nameOrID, nil, nil)
+	req := c.buildRequest("DELETE", "/apis/"+nameOrID, nil, nil)
 	e = c.makeRequest(req, nil)
 	return e
 }

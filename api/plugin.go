@@ -18,7 +18,7 @@ type Plugin struct {
 
 // ListPlugins lists the Plugin objects in Kong
 func (c *KongAdminAPIClient) ListPlugins() (results ListPluginsResult, err error) {
-	req := buildRequest("GET", c.APIURLBase+"/plugins", nil, nil)
+	req := c.buildRequest("GET", "/plugins", nil, nil)
 	err = c.makeRequest(req, &results)
 	return results, err
 }
@@ -27,13 +27,13 @@ func (c *KongAdminAPIClient) ListPlugins() (results ListPluginsResult, err error
 func (c *KongAdminAPIClient) CreatePlugin(b string, serviceId string, routeId string) (r Plugin, err error) {
 	var url string
 	if serviceId != "" {
-		url = c.APIURLBase + "/services/" + serviceId + "/plugins"
+		url = c.APIURL + "/services/" + serviceId + "/plugins"
 	} else if routeId != "" {
-		url = c.APIURLBase + "/routes/" + routeId + "/plugins"
+		url = c.APIURL + "/routes/" + routeId + "/plugins"
 	} else {
-		url = c.APIURLBase + "/plugins"
+		url = c.APIURL + "/plugins"
 	}
-	req := buildRequest("POST", url, nil, strings.NewReader(b))
+	req := c.buildRequest("POST", url, nil, strings.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")
 	err = c.makeRequest(req, &r)
 	return r, err
