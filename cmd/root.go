@@ -9,8 +9,8 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "konga",
-	Short: "A CLI tool for interacting the the Kong API",
-	Long:  "A CLI tool for interacting the the Kong API",
+	Short: "A CLI tool for interacting with the Kong API",
+	Long:  "A CLI tool for interacting with the Kong API",
 }
 
 var client *api.KongAdminAPIClient

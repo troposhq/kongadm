@@ -1,5 +1,7 @@
 package api
 
+import "strings"
+
 // ListPluginsResult is the structure returned from the /plugins route in Kong
 type ListPluginsResult struct {
 	Data []Plugin `json:"data"`
@@ -19,4 +21,20 @@ func (c *KongAdminAPIClient) ListPlugins() (results ListPluginsResult, err error
 	req := buildRequest("GET", c.APIURLBase+"/plugins", nil, nil)
 	err = c.makeRequest(req, &results)
 	return results, err
+}
+
+// CreatePlugin adds a new Plugin object in Kong
+func (c *KongAdminAPIClient) CreatePlugin(b string, serviceId string, routeId string) (r Plugin, err error) {
+	var url string
+	if serviceId != "" {
+		url = c.APIURLBase + "/services/" + serviceId + "/plugins"
+	} else if routeId != "" {
+		url = c.APIURLBase + "/routes/" + routeId + "/plugins"
+	} else {
+		url = c.APIURLBase + "/plugins"
+	}
+	req := buildRequest("POST", url, nil, strings.NewReader(b))
+	req.Header.Add("Content-Type", "application/json")
+	err = c.makeRequest(req, &r)
+	return r, err
 }

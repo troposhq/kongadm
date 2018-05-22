@@ -2,15 +2,6 @@
 
 
 [[projects]]
-  branch = "master"
-  name = "github.com/troposhq/konga"
-  packages = [
-    "api",
-    "cmd"
-  ]
-  revision = "c2ae1b726db7d6aea0c1d89e037fe20583c794ba"
-
-[[projects]]
   name = "github.com/inconshreveable/mousetrap"
   packages = ["."]
   revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
@@ -31,6 +22,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "36642f6804105796aae54dbd7208a478ba372c29324638036ef92c1e9098cf51"
+  inputs-digest = "07464de8b16f5ca646bc999fee5c3d7fd39928d9036889da483bc8e490a0b9a9"
   solver-name = "gps-cdcl"
   solver-version = 1

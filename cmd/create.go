@@ -9,6 +9,8 @@ import (
 )
 
 var filePath string
+var service string
+var route string
 
 func createAPI(cmd *cobra.Command, args []string) {
 	if filePath != "" {
@@ -24,6 +26,23 @@ func createAPI(cmd *cobra.Command, args []string) {
 		}
 
 		fmt.Printf("%+v", api)
+	}
+}
+
+func createPlugin(cmd *cobra.Command, args []string) {
+	if filePath != "" {
+		file, e := ioutil.ReadFile(filePath)
+		if e != nil {
+			fmt.Println("Error reading file. Are you sure the file exists and the path is correct?")
+			os.Exit(1)
+		}
+
+		plugin, e := client.CreatePlugin(string(file), service, route)
+		if e != nil {
+			fmt.Println("Error creating Plugin: ", e.Error())
+		}
+
+		fmt.Printf("%+v", plugin)
 	}
 }
 
@@ -85,6 +104,10 @@ func init() {
 	createCmd.AddCommand(createServiceCmd)
 	createCmd.AddCommand(createRouteCmd)
 
+	createPluginCmd.Flags().StringVarP(&service, "service", "s", "", "ID of service to configure plugin on top of")
+	createPluginCmd.Flags().StringVarP(&route, "route", "r", "", "ID of route to configure plugin on top of")
+	createCmd.AddCommand(createPluginCmd)
+
 	createCmd.PersistentFlags().StringVarP(&filePath, "file", "f", "", "Filepath of a json representation of the resource to create.")
 }
 
@@ -114,4 +137,10 @@ var createRouteCmd = &cobra.Command{
 	Use:   "route",
 	Short: "Create a Route",
 	Run:   createRoute,
+}
+
+var createPluginCmd = &cobra.Command{
+	Use:   "plugin",
+	Short: "Create a Plugin",
+	Run:   createPlugin,
 }
