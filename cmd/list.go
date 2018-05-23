@@ -1,107 +1,91 @@
 package cmd
 
-// import (
-// 	"fmt"
+import (
+	"fmt"
 
-// 	"github.com/spf13/cobra"
-// )
+	"github.com/spf13/cobra"
+)
 
-// func listAPI(cmd *cobra.Command, args []string) {
-// 	results, err := client.ListAPI()
+func listServices(cmd *cobra.Command, args []string) {
+	r, err := client.ListServices()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+	prettyPrintStruct(r)
+}
 
-// 	fmt.Printf("Results are... %+v", results)
-// }
+func listRoutes(cmd *cobra.Command, args []string) {
+	r, err := client.ListRoutes()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-// func listConsumers(cmd *cobra.Command, args []string) {
-// 	r, err := client.ListConsumers()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+	prettyPrintStruct(r)
+}
 
-// 	fmt.Printf("%+v", r)
-// }
+func listConsumers(cmd *cobra.Command, args []string) {
+	r, err := client.ListConsumers()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-// func listServices(cmd *cobra.Command, args []string) {
-// 	r, err := client.ListServices()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+	prettyPrintStruct(r)
+}
 
-// 	fmt.Printf("%+v", r)
-// }
+func listPlugins(cmd *cobra.Command, args []string) {
+	r, err := client.ListPlugins()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-// func listRoutes(cmd *cobra.Command, args []string) {
-// 	r, err := client.ListRoutes()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+	prettyPrintStruct(r)
+}
 
-// 	fmt.Printf("%+v", r)
-// }
+func init() {
+	rootCmd.AddCommand(listCmd)
 
-// func listPlugins(cmd *cobra.Command, args []string) {
-// 	r, err := client.ListPlugins()
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+	// ListServices Command
+	listCmd.AddCommand(listServicesCmd)
 
-// 	fmt.Printf("%+v", r)
-// }
+	// ListRoutes Command
+	listCmd.AddCommand(listRoutesCmd)
 
-// func init() {
-// 	// konga list
-// 	rootCmd.AddCommand(listCmd)
-// 	// konga list api
-// 	listCmd.AddCommand(listAPICmd)
-// 	// konga list consumer
-// 	listCmd.AddCommand(listConsumersCmd)
-// 	// konga list service
-// 	listCmd.AddCommand(listServicesCmd)
-// 	// konga list route
-// 	listCmd.AddCommand(listRoutesCmd)
-// 	// konga list plugin
-// 	listCmd.AddCommand(listPluginsCmd)
-// }
+	// ListConsumers Command
+	listCmd.AddCommand(listConsumersCmd)
 
-// var listCmd = &cobra.Command{
-// 	Use: "list [resource]",
-// }
+	// ListPlugins Command
+	listCmd.AddCommand(listPluginsCmd)
+}
 
-// var listAPICmd = &cobra.Command{
-// 	Use:   "api",
-// 	Short: "List API objects",
-// 	Run:   listAPI,
-// }
+var listCmd = &cobra.Command{
+	Use: "list [resource]",
+}
 
-// var listConsumersCmd = &cobra.Command{
-// 	Use:   "consumer",
-// 	Short: "List Consumer objects",
-// 	Run:   listConsumers,
-// }
+var listServicesCmd = &cobra.Command{
+	Use:   "service",
+	Short: "List Service objects",
+	Run:   listServices,
+}
 
-// var listServicesCmd = &cobra.Command{
-// 	Use:   "service",
-// 	Short: "List Service objects",
-// 	Run:   listServices,
-// }
+var listRoutesCmd = &cobra.Command{
+	Use:   "route",
+	Short: "List Route objects",
+	Run:   listRoutes,
+}
 
-// var listRoutesCmd = &cobra.Command{
-// 	Use:   "route",
-// 	Short: "List Route objects",
-// 	Run:   listRoutes,
-// }
+var listConsumersCmd = &cobra.Command{
+	Use:   "consumer",
+	Short: "List Consumer objects",
+	Run:   listConsumers,
+}
 
-// var listPluginsCmd = &cobra.Command{
-// 	Use:   "plugin",
-// 	Short: "List Plugin objects",
-// 	Run:   listPlugins,
-// }
+var listPluginsCmd = &cobra.Command{
+	Use:   "plugin",
+	Short: "List Plugin objects",
+	Run:   listPlugins,
+}
