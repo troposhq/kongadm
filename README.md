@@ -1,9 +1,22 @@
 # konga
-GoLang CLI for interacting with the Kong Admin API
 
-### CLI Commands
-Command                 | Description
-------------------------|----------------------------
-list api                | List available APIs
-get api [name or id]    | Get an API by name or id
-list consumer           | List Consumers
+# Table of Contents
+
+- [Overview](#overview)
+- [Installing](#installing)
+- [Getting Started](#getting-started)
+  * [Services](#services)
+- [License](#license)
+
+# Overview
+
+Konga is a CLI that provides a simple interface for interacting with the Kong Admin API.
+
+# Installing
+
+Download the binary from our Releases page.
+
+# Getting Started
+
+## Services
+
