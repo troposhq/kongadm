@@ -27,7 +27,7 @@ type Route struct {
 }
 
 // AddRoute creates a new Kong Route object
-func (c *KongAdminAPIClient) AddRoute(route Route) (r Route, err error) {
+func (c KongAdminAPIClient) AddRoute(route Route) (r Route, err error) {
 	b, err := json.Marshal(route)
 	if err != nil {
 		fmt.Println("Error marshaling Route: " + err.Error())
@@ -41,7 +41,7 @@ func (c *KongAdminAPIClient) AddRoute(route Route) (r Route, err error) {
 }
 
 // ListRoutes lists the Route objects in Kong
-func (c *KongAdminAPIClient) ListRoutes() (results ListRoutesResult, err error) {
+func (c KongAdminAPIClient) ListRoutes() (results ListRoutesResult, err error) {
 	req := c.buildRequest("GET", "/routes", nil, nil)
 	err = c.makeRequest(req, &results)
 	return results, err

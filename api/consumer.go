@@ -19,7 +19,7 @@ type Consumer struct {
 }
 
 // CreateConsumer creates a new Consumer object in Kong
-func (c *KongAdminAPIClient) CreateConsumer(i Consumer) (r Consumer, err error) {
+func (c KongAdminAPIClient) CreateConsumer(i Consumer) (r Consumer, err error) {
 	b, err := json.Marshal(i)
 	req := c.buildRequest("POST", "/consumers", nil, bytes.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")
@@ -28,21 +28,21 @@ func (c *KongAdminAPIClient) CreateConsumer(i Consumer) (r Consumer, err error) 
 }
 
 // ListConsumers fetches Consumers from the Kong API
-func (c *KongAdminAPIClient) ListConsumers() (r ListConsumersResult, err error) {
+func (c KongAdminAPIClient) ListConsumers() (r ListConsumersResult, err error) {
 	req := c.buildRequest("GET", "/consumers", nil, nil)
 	err = c.makeRequest(req, &r)
 	return r, err
 }
 
 // GetConsumer fetches an API by name or id
-func (c *KongAdminAPIClient) GetConsumer(usernameOrID string) (r Consumer, err error) {
+func (c KongAdminAPIClient) GetConsumer(usernameOrID string) (r Consumer, err error) {
 	req := c.buildRequest("GET", "/consumers/"+usernameOrID, nil, nil)
 	err = c.makeRequest(req, &r)
 	return r, err
 }
 
 // DeleteConsumer will delete a Consumer object in Kong
-func (c *KongAdminAPIClient) DeleteConsumer(nameOrID string) (e error) {
+func (c KongAdminAPIClient) DeleteConsumer(nameOrID string) (e error) {
 	req := c.buildRequest("DELETE", "/consumers/"+nameOrID, nil, nil)
 	e = c.makeRequest(req, nil)
 	return e
