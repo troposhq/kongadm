@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/troposhq/konga/api"
+	"github.com/troposhq/kongadm/api"
 )
 
 type PluginConfig struct {
@@ -40,7 +40,7 @@ func (c *PluginConfig) Type() string {
 
 // These contains objects for storing values passed in through the CLI
 //
-// For example, if a user runs `konga create service --name hello --host google.com`
+// For example, if a user runs `kongadm create service --name hello --host google.com`
 // the service variable below will have the values service.Name = "tropos-website" and service.Host = "troposhq.com"
 //
 // The same is true for any of the CLI methods including, Get, Update, and Delete commands. Any CLI flag values
@@ -57,7 +57,7 @@ var pluginConfig PluginConfig
 var filePath string
 
 var rootCmd = &cobra.Command{
-	Use:   "konga",
+	Use:   "kongadm",
 	Short: "A CLI tool for interacting with the Kong API",
 	Long:  "A CLI tool for interacting with the Kong API",
 }

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/troposhq/konga/cmd"
+	"github.com/troposhq/kongadm/cmd"
 )
 
 func main() {

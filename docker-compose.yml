@@ -2,13 +2,13 @@ version: '3'
 services:
   postgres:
     image: postgres:9.6.8-alpine
-    container_name: konga-local-postgres-9.6.8
+    container_name: kongadm-local-postgres-9.6.8
     ports:
       - 5432:5432
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: supersecret
-      POSTGRES_DB: konga
+      POSTGRES_DB: kongadm
 
   kong_migrations:
     image: kong:0.13.1-centos # can't use alpine with the wait-for-it script
@@ -27,7 +27,7 @@ services:
       KONG_DATABASE: postgres
       KONG_PG_HOST: postgres
       KONG_PG_USER: root
-      KONG_PG_DATABASE: konga
+      KONG_PG_DATABASE: kongadm
       KONG_PG_PASSWORD: supersecret
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_PROXY_ERROR_LOG: /dev/stdout
@@ -46,7 +46,7 @@ services:
       KONG_PG_HOST: postgres
       KONG_PG_USER: root
       KONG_PG_PASSWORD: supersecret
-      KONG_PG_DATABASE: konga
+      KONG_PG_DATABASE: kongadm
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_PROXY_ERROR_LOG: /dev/stdout
       KONG_ADMIN_ACCESS_LOG: /dev/stdout
