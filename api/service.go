@@ -44,13 +44,8 @@ func (c KongAdminAPIClient) ListServices() (results ListServicesResult, err erro
 }
 
 // GetService fetches a Service by name or id
-func (c KongAdminAPIClient) GetService(s Service) (r Service, err error) {
-	nameOrID := s.Name
-	if nameOrID == "" {
-		nameOrID = s.ID
-	}
-
-	req := c.buildRequest("GET", "/services/"+nameOrID, nil, nil)
+func (c KongAdminAPIClient) GetService(s string) (r Service, err error) {
+	req := c.buildRequest("GET", "/services/"+s, nil, nil)
 	err = c.makeRequest(req, &r)
 	return r, err
 }
@@ -70,13 +65,8 @@ func (c KongAdminAPIClient) UpdateService(s Service) (r Service, err error) {
 }
 
 // DeleteService will delete a Service object in Kong
-func (c KongAdminAPIClient) DeleteService(s Service) error {
-	nameOrID := s.Name
-	if nameOrID == "" {
-		nameOrID = s.ID
-	}
-
-	req := c.buildRequest("DELETE", "/services/"+nameOrID, nil, nil)
+func (c KongAdminAPIClient) DeleteService(s string) error {
+	req := c.buildRequest("DELETE", "/services/"+s, nil, nil)
 	err := c.makeRequest(req, nil)
 	return err
 }

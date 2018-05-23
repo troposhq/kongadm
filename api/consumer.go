@@ -18,6 +18,15 @@ type Consumer struct {
 	CreatedAt int    `json:"created_at,omitempty"`
 }
 
+// CreateConsumer creates a new Consumer object in Kong
+func (c *KongAdminAPIClient) CreateConsumer(i Consumer) (r Consumer, err error) {
+	b, err := json.Marshal(i)
+	req := c.buildRequest("POST", "/consumers", nil, bytes.NewReader(b))
+	req.Header.Add("Content-Type", "application/json")
+	err = c.makeRequest(req, &r)
+	return r, err
+}
+
 // ListConsumers fetches Consumers from the Kong API
 func (c *KongAdminAPIClient) ListConsumers() (r ListConsumersResult, err error) {
 	req := c.buildRequest("GET", "/consumers", nil, nil)
@@ -28,15 +37,6 @@ func (c *KongAdminAPIClient) ListConsumers() (r ListConsumersResult, err error) 
 // GetConsumer fetches an API by name or id
 func (c *KongAdminAPIClient) GetConsumer(usernameOrID string) (r Consumer, err error) {
 	req := c.buildRequest("GET", "/consumers/"+usernameOrID, nil, nil)
-	err = c.makeRequest(req, &r)
-	return r, err
-}
-
-// CreateConsumer creates a new Consumer object in Kong
-func (c *KongAdminAPIClient) CreateConsumer(i Consumer) (r Consumer, err error) {
-	b, err := json.Marshal(i)
-	req := c.buildRequest("POST", "/consumers", nil, bytes.NewReader(b))
-	req.Header.Add("Content-Type", "application/json")
 	err = c.makeRequest(req, &r)
 	return r, err
 }

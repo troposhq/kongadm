@@ -1,72 +1,57 @@
 package cmd
 
-// import (
-// 	"fmt"
+import (
+	"fmt"
 
-// 	"github.com/spf13/cobra"
-// )
+	"github.com/spf13/cobra"
+)
 
-// func getAPI(cmd *cobra.Command, args []string) {
-// 	nameOrID := args[0]
-// 	api, err := client.GetAPI(nameOrID)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+func getService(cmd *cobra.Command, args []string) {
+	nameOrID := args[0]
+	service, err := client.GetService(nameOrID)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-// 	fmt.Printf("%+v", api)
-// }
+	prettyPrintStruct(service)
+}
 
-// func getConsumer(cmd *cobra.Command, args []string) {
-// 	usernameOrID := args[0]
-// 	consumer, err := client.GetConsumer(usernameOrID)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+func getConsumer(cmd *cobra.Command, args []string) {
+	usernameOrID := args[0]
+	consumer, err := client.GetConsumer(usernameOrID)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-// 	fmt.Printf("%+v", consumer)
-// }
+	prettyPrintStruct(consumer)
+}
 
-// func getService(cmd *cobra.Command, args []string) {
-// 	nameOrID := args[0]
-// 	service, err := client.GetService(nameOrID)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
+func init() {
+	rootCmd.AddCommand(getCmd)
 
-// 	fmt.Printf("%+v", service)
-// }
+	// GetService Command
+	getCmd.AddCommand(getServiceCmd)
 
-// func init() {
-// 	rootCmd.AddCommand(getCmd)
-// 	getCmd.AddCommand(getAPICmd)
-// 	getCmd.AddCommand(getConsumerCmd)
-// 	getCmd.AddCommand(getServiceCmd)
-// }
+	// GetConsumer Command
+	getCmd.AddCommand(getConsumerCmd)
+}
 
-// var getCmd = &cobra.Command{
-// 	Use: "get [resource]",
-// }
+var getCmd = &cobra.Command{
+	Use: "get [resource]",
+}
 
-// var getAPICmd = &cobra.Command{
-// 	Use:   "api",
-// 	Short: "Get an API by name or id",
-// 	Args:  cobra.ExactArgs(1),
-// 	Run:   getAPI,
-// }
+var getServiceCmd = &cobra.Command{
+	Use:   "service",
+	Short: "Get a Service by name or id",
+	Args:  cobra.ExactArgs(1),
+	Run:   getService,
+}
 
-// var getConsumerCmd = &cobra.Command{
-// 	Use:   "consumer",
-// 	Short: "Get a Consumer by username or id",
-// 	Args:  cobra.ExactArgs(1),
-// 	Run:   getConsumer,
-// }
-
-// var getServiceCmd = &cobra.Command{
-// 	Use:   "service",
-// 	Short: "Get a Service by name or id",
-// 	Args:  cobra.ExactArgs(1),
-// 	Run:   getService,
-// }
+var getConsumerCmd = &cobra.Command{
+	Use:   "consumer",
+	Short: "Get a Consumer by username or id",
+	Args:  cobra.ExactArgs(1),
+	Run:   getConsumer,
+}
