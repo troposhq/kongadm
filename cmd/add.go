@@ -124,5 +124,14 @@ var addRouteCmd = &cobra.Command{
 var addPluginCmd = &cobra.Command{
 	Use:   "plugin",
 	Short: "Add a Plugin",
-	Run:   addPlugin,
+	Long: `
+You can add a plugin in four different ways:
+- For every Service/Route and Consumer. Don't set consumer_id and set service_id or route_id.
+- For every Service/Route and a specific Consumer. Only set consumer_id.
+- For every Consumer and a specific Service. Only set service_id (warning: some plugins only allow setting their route_id)
+- For every Consumer and a specific Route. Only set route_id (warning: some plugins only allow setting their service_id)
+- For a specific Service/Route and Consumer. Set both service_id/route_id and consumer_id.
+Note that not all plugins allow to specify consumer_id. Check the plugin documentation.
+	`,
+	Run: addPlugin,
 }
