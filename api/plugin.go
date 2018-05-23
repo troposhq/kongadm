@@ -12,13 +12,14 @@ type ListPluginsResult struct {
 
 // Plugin is an individual Plugin object
 type Plugin struct {
-	ID         string `json:"id,omitempty"`
-	ServiceID  string `json:"service_id,omitempty"`
-	ConsumerID string `json:"consumer_id,omitempty"`
-	RouteID    string `json:"route_id,omitempty"`
-	Name       string `json:"name,omitempty"`
-	Enabled    bool   `json:"enabled,omitempty"`
-	CreatedAt  int    `json:"created_at,omitempty"`
+	ID         string                 `json:"id,omitempty"`
+	ServiceID  string                 `json:"service_id,omitempty"`
+	ConsumerID string                 `json:"consumer_id,omitempty"`
+	RouteID    string                 `json:"route_id,omitempty"`
+	Name       string                 `json:"name,omitempty"`
+	Enabled    bool                   `json:"enabled,omitempty"`
+	Config     map[string]interface{} `json:"config,omitempty"`
+	CreatedAt  int                    `json:"created_at,omitempty"`
 }
 
 // ListPlugins lists the Plugin objects in Kong

@@ -7,25 +7,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createPlugin(cmd *cobra.Command, args []string) {
-	var err error
-	if filePath != "" {
-		err := unmarshalFile(filePath, &plugin)
-		if err != nil {
-			fmt.Println("Error creating Plugin: ", err.Error())
-			os.Exit(1)
-		}
-	}
-
-	plugin, err = client.AddPlugin(plugin)
-	if err != nil {
-		fmt.Println("Error creating Plugin: ", err.Error())
-		os.Exit(1)
-	}
-
-	prettyPrintStruct(plugin)
-}
-
 func addService(cmd *cobra.Command, args []string) {
 	var err error
 	if filePath != "" {
@@ -63,14 +44,34 @@ func addRoute(cmd *cobra.Command, args []string) {
 	prettyPrintStruct(route)
 }
 
+func addPlugin(cmd *cobra.Command, args []string) {
+	plugin.Config = pluginConfig.Options
+	var err error
+	if filePath != "" {
+		err := unmarshalFile(filePath, &plugin)
+		if err != nil {
+			fmt.Println("Error creating Plugin: ", err.Error())
+			os.Exit(1)
+		}
+	}
+
+	plugin, err = client.AddPlugin(plugin)
+	if err != nil {
+		fmt.Println("Error creating Plugin: ", err.Error())
+		os.Exit(1)
+	}
+
+	prettyPrintStruct(plugin)
+}
+
 func init() {
 	addCmd.PersistentFlags().StringVarP(&filePath, "file", "f", "", "Filepath of a json representation of the resource to create.")
 
 	rootCmd.AddCommand(addCmd)
 
-	// CreateService Command
+	// AddService Command
 	addCmd.AddCommand(addServiceCmd)
-	// CreateService Flags
+	// AddService Flags
 	addServiceCmd.Flags().IntVar(&service.ConnectTimeout, "connect-timeout", 60000, "The timeout in milliseconds for establishing a connection to the upstream servere")
 	addServiceCmd.Flags().StringVar(&service.Protocol, "protocol", "http", "The protocol used to communicate with the upstream. It can be one of http (default) or https")
 	addServiceCmd.Flags().StringVar(&service.Host, "host", "", "The host of the upstream server")
@@ -82,9 +83,9 @@ func init() {
 	addServiceCmd.Flags().IntVar(&service.WriteTimeout, "write-timeout", 60000, "The timeout in milliseconds between two successive write operations for transmitting a request to the upstream server")
 	addServiceCmd.Flags().StringVar(&service.URL, "url", "", "Shorthand attribute to set protocol, host, port and path at once. This attribute is write-only (the Admin API never \"returns\" the url)")
 
-	// CreateRoute Command
+	// AddRoute Command
 	addCmd.AddCommand(addRouteCmd)
-	// CreateRoute Flags
+	// AddRoute Flags
 	addRouteCmd.Flags().StringSliceVar(&route.Protocols, "protocols", []string{"http"}, "A list of the protocols this Route should allow. By default it is [\"http\", \"https\"], which means that the Route accepts both. When set to [\"https\"], HTTP requests are answered with a request to upgrade to HTTPS")
 	addRouteCmd.Flags().StringSliceVar(&route.Methods, "methods", []string{"GET"}, "A list of HTTP methods that match this Route. For example: [\"GET\", \"POST\"]. At least one of hosts, paths, or methods must be set")
 	addRouteCmd.Flags().StringSliceVar(&route.Hosts, "hosts", make([]string, 0), "A list of domain names that match this Route. For example: example.com. At least one of hosts, paths, or methods must be set")
@@ -93,9 +94,15 @@ func init() {
 	addRouteCmd.Flags().BoolVar(&route.PreserveHost, "preserve-host", true, "When matching a Route via one of the hosts domain names, use the request Host header in the upstream request headers. By default set to false, and the upstream Host header will be that of the Service's host")
 	addRouteCmd.Flags().StringVar(&route.Service.ID, "service", "", "The Service this Route is associated to. This is where the Route proxies traffic to")
 
-	// createPluginCmd.Flags().StringVarP(&serviceNameOrID, "service", "s", "", "ID of service to configure plugin on top of")
-	// createPluginCmd.Flags().StringVarP(&route, "route", "r", "", "ID of route to configure plugin on top of")
-	// createCmd.AddCommand(createPluginCmd)
+	// AddPlugin Command
+	addCmd.AddCommand(addPluginCmd)
+	// AddPlugin Flags
+	addPluginCmd.Flags().StringVar(&plugin.Name, "name", "", "The name of the Plugin that's going to be added")
+	addPluginCmd.Flags().StringVarP(&plugin.ServiceID, "service", "s", "", "ID of service to configure plugin on top of")
+	addPluginCmd.Flags().StringVarP(&plugin.RouteID, "route", "r", "", "ID of route to configure plugin on top of")
+	addPluginCmd.Flags().StringVarP(&plugin.ConsumerID, "consumer", "c", "", "ID of consumer to configure plugin on top of")
+	addPluginCmd.Flags().BoolVar(&plugin.Enabled, "enabled", true, "Whether the plugin is applied")
+	addPluginCmd.Flags().Var(&pluginConfig, "config", "The configuration properties for the Plugin which can be found on the plugins documentation page in the Plugin Gallery")
 }
 
 var addCmd = &cobra.Command{
@@ -114,8 +121,8 @@ var addRouteCmd = &cobra.Command{
 	Run:   addRoute,
 }
 
-// var createPluginCmd = &cobra.Command{
-// 	Use:   "plugin",
-// 	Short: "Add a Plugin",
-// 	Run:   createPlugin,
-// }
+var addPluginCmd = &cobra.Command{
+	Use:   "plugin",
+	Short: "Add a Plugin",
+	Run:   addPlugin,
+}

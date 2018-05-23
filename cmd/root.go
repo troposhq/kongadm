@@ -1,11 +1,42 @@
 package cmd
 
 import (
+	"errors"
+	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/troposhq/konga/api"
 )
+
+type PluginConfig struct {
+	Options map[string]interface{}
+}
+
+func (c *PluginConfig) String() string {
+	return fmt.Sprintln(c.Options)
+}
+
+func (c *PluginConfig) Set(s string) error {
+	if c.Options == nil {
+		c.Options = make(map[string]interface{})
+	}
+
+	kv := strings.Split(s, "=")
+	if len(kv) != 2 {
+		return errors.New("Specify --config in the format key=value")
+	}
+
+	k := kv[0]
+	v := kv[1]
+	c.Options[k] = v
+	return nil
+}
+
+func (c *PluginConfig) Type() string {
+	return "PluginConfig"
+}
 
 // These contains objects for storing values passed in through the CLI
 //
@@ -21,6 +52,7 @@ var service api.Service
 var route api.Route
 var consumer api.Consumer
 var plugin api.Plugin
+var pluginConfig PluginConfig
 
 var filePath string
 
