@@ -1,6 +1,9 @@
 package api
 
-import "strings"
+import (
+	"bytes"
+	"encoding/json"
+)
 
 // ListPluginsResult is the structure returned from the /plugins route in Kong
 type ListPluginsResult struct {
@@ -9,11 +12,13 @@ type ListPluginsResult struct {
 
 // Plugin is an individual Plugin object
 type Plugin struct {
-	ID        string `json:"id"`
-	ServiceID string `json:"service_id"`
-	Name      string `json:"name"`
-	Enabled   bool   `json:"enabled"`
-	CreatedAt int    `json:"created_at"`
+	ID         string `json:"id,omitempty"`
+	ServiceID  string `json:"service_id,omitempty"`
+	ConsumerID string `json:"consumer_id,omitempty"`
+	RouteID    string `json:"route_id,omitempty"`
+	Name       string `json:"name,omitempty"`
+	Enabled    bool   `json:"enabled,omitempty"`
+	CreatedAt  int    `json:"created_at,omitempty"`
 }
 
 // ListPlugins lists the Plugin objects in Kong
@@ -23,17 +28,10 @@ func (c *KongAdminAPIClient) ListPlugins() (results ListPluginsResult, err error
 	return results, err
 }
 
-// CreatePlugin adds a new Plugin object in Kong
-func (c *KongAdminAPIClient) CreatePlugin(b string, serviceId string, routeId string) (r Plugin, err error) {
-	var url string
-	if serviceId != "" {
-		url = c.APIURL + "/services/" + serviceId + "/plugins"
-	} else if routeId != "" {
-		url = c.APIURL + "/routes/" + routeId + "/plugins"
-	} else {
-		url = c.APIURL + "/plugins"
-	}
-	req := c.buildRequest("POST", url, nil, strings.NewReader(b))
+// AddPlugin adds a new Plugin object in Kong
+func (c *KongAdminAPIClient) AddPlugin(p Plugin) (r Plugin, err error) {
+	b, err := json.Marshal(p)
+	req := c.buildRequest("POST", "/plugins", nil, bytes.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")
 	err = c.makeRequest(req, &r)
 	return r, err

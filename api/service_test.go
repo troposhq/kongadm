@@ -9,7 +9,7 @@ var client = New("localhost:8001")
 var service Service
 
 func TestCreateService(t *testing.T) {
-	s, err := client.CreateService(Service{
+	s, err := client.AddService(Service{
 		URL: "http://localhost:8001",
 	})
 

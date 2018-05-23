@@ -27,8 +27,8 @@ type Service struct {
 	URL            string `json:"url,omitempty"`
 }
 
-// CreateService creates a new Service object in Kong
-func (c KongAdminAPIClient) CreateService(s Service) (r Service, err error) {
+// AddService creates a new Service object in Kong
+func (c KongAdminAPIClient) AddService(s Service) (r Service, err error) {
 	b, err := json.Marshal(s)
 	req := c.buildRequest("POST", "/services", nil, bytes.NewReader(b))
 	req.Header.Add("Content-Type", "application/json")

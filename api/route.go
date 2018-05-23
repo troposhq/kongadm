@@ -26,8 +26,8 @@ type Route struct {
 	Service       Service  `json:"service,omitempty"`
 }
 
-// CreateRoute creates a new Kong Route object
-func (c *KongAdminAPIClient) CreateRoute(route Route) (r Route, err error) {
+// AddRoute creates a new Kong Route object
+func (c *KongAdminAPIClient) AddRoute(route Route) (r Route, err error) {
 	b, err := json.Marshal(route)
 	if err != nil {
 		fmt.Println("Error marshaling Route: " + err.Error())
