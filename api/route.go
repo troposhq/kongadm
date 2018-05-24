@@ -46,3 +46,10 @@ func (c KongAdminAPIClient) ListRoutes() (results ListRoutesResult, err error) {
 	err = c.makeRequest(req, &results)
 	return results, err
 }
+
+// DeleteRoute will delete a Route object in Kong
+func (c KongAdminAPIClient) DeleteRoute(nameOrID string) (e error) {
+	req := c.buildRequest("DELETE", "/routes/"+nameOrID, nil, nil)
+	e = c.makeRequest(req, nil)
+	return e
+}
