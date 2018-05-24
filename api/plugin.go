@@ -37,3 +37,12 @@ func (c KongAdminAPIClient) AddPlugin(p Plugin) (r Plugin, err error) {
 	err = c.makeRequest(req, &r)
 	return r, err
 }
+
+// UpdatePlugin updates an existing Plugin object's configuration in Kong
+func (c KongAdminAPIClient) UpdatePlugin(p Plugin) (r Plugin, err error) {
+	b, err := json.Marshal(p)
+	req := c.buildRequest("PATCH", "/plugins/"+p.ID, nil, bytes.NewReader(b))
+	req.Header.Add("Content-Type", "application/json")
+	err = c.makeRequest(req, &r)
+	return r, err
+}
