@@ -4,9 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"os/user"
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/troposhq/kongadm/api"
 )
 
@@ -65,6 +67,24 @@ var rootCmd = &cobra.Command{
 var client *api.KongAdminAPIClient
 
 func init() {
+	viper.SetConfigName("config")
+	viper.AddConfigPath("$HOME/.kongadm")
+	// Create the config file if it does not exist
+	if _, err := os.Stat("$HOME/.kongadm/config"); os.IsNotExist(err) {
+		usr, _ := user.Current()
+		dir := usr.HomeDir
+		fmt.Println(dir)
+		os.MkdirAll(dir+"/.kongadm", 0755)
+		_, err = os.OpenFile(dir+"/.kongadm/config.yml", os.O_RDONLY|os.O_CREATE, 0644)
+		fmt.Println(err)
+	}
+
+	// Load the config file
+	err := viper.ReadInConfig()
+	if err != nil {
+		fmt.Printf("Fatal error reading config file: %s \n", err)
+		os.Exit(1)
+	}
 	apiURLBase := rootCmd.PersistentFlags().String("url", "localhost:8001", "URL for the Kong Admin API")
 	client = api.New(*apiURLBase)
 }
