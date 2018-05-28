@@ -28,7 +28,7 @@ func TestListServices(t *testing.T) {
 }
 
 func TestGetService(t *testing.T) {
-	s, _ := client.GetService(service)
+	s, _ := client.GetService(service.ID)
 	if s.ID != service.ID {
 		t.Error("Expected to get the existing service")
 	}
@@ -46,7 +46,7 @@ func TestUpdateService(t *testing.T) {
 }
 
 func TestDeleteService(t *testing.T) {
-	err := client.DeleteService(service)
+	err := client.DeleteService(service.ID)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
