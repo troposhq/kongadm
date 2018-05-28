@@ -58,15 +58,25 @@ var pluginConfig PluginConfig
 
 var filePath string
 
+var client *api.KongAdminAPIClient
+
 var rootCmd = &cobra.Command{
 	Use:   "kongadm",
 	Short: "A CLI tool for interacting with the Kong API",
 	Long:  "A CLI tool for interacting with the Kong API",
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		apiURLBase := viper.GetString("url")
+		client = api.New(apiURLBase)
+	},
 }
 
-var client *api.KongAdminAPIClient
-
 func init() {
+	cobra.OnInitialize(initConfig)
+	rootCmd.PersistentFlags().String("url", "localhost:8001", "URL for the Kong Admin API")
+	viper.BindPFlag("url", rootCmd.PersistentFlags().Lookup("url"))
+}
+
+func initConfig() {
 	viper.SetConfigName("config")
 	viper.AddConfigPath("$HOME/.kongadm")
 	// Create the config file if it does not exist
@@ -85,8 +95,6 @@ func init() {
 		fmt.Printf("Fatal error reading config file: %s \n", err)
 		os.Exit(1)
 	}
-	apiURLBase := rootCmd.PersistentFlags().String("url", "localhost:8001", "URL for the Kong Admin API")
-	client = api.New(*apiURLBase)
 }
 
 // Execute is the entrypoint for the CLI called from the main function
