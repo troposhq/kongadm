@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/base64"
 	"errors"
 	"fmt"
 	"os"
@@ -65,8 +66,12 @@ var rootCmd = &cobra.Command{
 	Short: "A CLI tool for interacting with the Kong API",
 	Long:  "A CLI tool for interacting with the Kong API",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		decoded, _ := base64.StdEncoding.DecodeString(viper.GetString("token"))
 		apiURLBase := viper.GetString("url")
-		client = api.New(apiURLBase)
+		client = api.New(api.Config{
+			Endpoint: apiURLBase,
+			Token:    string(decoded),
+		})
 	},
 }
 
@@ -83,10 +88,11 @@ func initConfig() {
 	if _, err := os.Stat("$HOME/.kongadm/config"); os.IsNotExist(err) {
 		usr, _ := user.Current()
 		dir := usr.HomeDir
-		fmt.Println(dir)
 		os.MkdirAll(dir+"/.kongadm", 0755)
 		_, err = os.OpenFile(dir+"/.kongadm/config.yml", os.O_RDONLY|os.O_CREATE, 0644)
-		fmt.Println(err)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 
 	// Load the config file

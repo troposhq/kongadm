@@ -37,3 +37,10 @@ func (c KongAdminAPIClient) AddPlugin(p Plugin) (r Plugin, err error) {
 	err = c.makeRequest(req, &r)
 	return r, err
 }
+
+// DeletePlugin will delete a Plugin object in Kong
+func (c KongAdminAPIClient) DeletePlugin(p string) error {
+	req := c.buildRequest("DELETE", "/plugins/"+p, nil, nil)
+	err := c.makeRequest(req, nil)
+	return err
+}

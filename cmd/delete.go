@@ -51,6 +51,21 @@ func deleteConsumer(cmd *cobra.Command, args []string) {
 	fmt.Printf("Successfully deleted Consumer")
 }
 
+func deletePlugin(cmd *cobra.Command, args []string) {
+	if !askForConfirmation("Are you sure?") {
+		fmt.Println("User cancelled operation")
+		return
+	}
+
+	err := client.DeletePlugin(args[0])
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("Successfully deleted Plugin.")
+}
+
 func init() {
 	rootCmd.AddCommand(deleteCmd)
 
@@ -60,6 +75,8 @@ func init() {
 	deleteCmd.AddCommand(deleteRouteCmd)
 	// DeleteConsumer Command
 	deleteCmd.AddCommand(deleteConsumerCmd)
+	// DeletePlugin Command
+	deleteCmd.AddCommand(deletePluginCmd)
 }
 
 var deleteCmd = &cobra.Command{
@@ -85,4 +102,11 @@ var deleteConsumerCmd = &cobra.Command{
 	Short: "Delete a Consumer in Kong",
 	Args:  cobra.ExactArgs(1),
 	Run:   deleteConsumer,
+}
+
+var deletePluginCmd = &cobra.Command{
+	Use:   "plugin",
+	Short: "Delete a Plugin in Kong",
+	Args:  cobra.ExactArgs(1),
+	Run:   deletePlugin,
 }

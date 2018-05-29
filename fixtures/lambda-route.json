@@ -1,8 +1,8 @@
 {
   "protocols": ["http"],
-  "methods": ["POST"],
-  "paths": ["/v1/users"],
+  "methods": ["GET"],
+  "paths": ["/posts"],
   "service": {
-    "id": "ac6ef1ec-c4a1-426e-be2b-4b68d91cb43f"
+    "id": "1400a777-1439-4069-94fc-fb9520e5633b"
   }
 }

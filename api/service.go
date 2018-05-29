@@ -3,6 +3,7 @@ package api
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // ListServicesResult is the structure returned from the /apis route in Kong
@@ -66,6 +67,7 @@ func (c KongAdminAPIClient) UpdateService(s Service) (r Service, err error) {
 
 // DeleteService will delete a Service object in Kong
 func (c KongAdminAPIClient) DeleteService(s string) error {
+	fmt.Println(s)
 	req := c.buildRequest("DELETE", "/services/"+s, nil, nil)
 	err := c.makeRequest(req, nil)
 	return err

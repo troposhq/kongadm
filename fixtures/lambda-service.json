@@ -1,3 +1,4 @@
 {
-    "url": "http://localhost:8000"
+    "name": "test-service", 
+    "url": "https://jsonplaceholder.typicode.com/posts"
 }

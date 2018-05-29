@@ -17,7 +17,7 @@ func (c KongAdminAPIClient) buildRequest(method, path string, query url.Values, 
 		query = url.Values{}
 	}
 
-	u, err := url.Parse(c.APIURL)
+	u, err := url.Parse(c.Config.Endpoint)
 	if err != nil {
 		fmt.Println("Error parsing Admin API URL")
 		fmt.Println(err.Error())
@@ -60,19 +60,24 @@ func (c KongAdminAPIClient) makeRequest(r *http.Request, d interface{}) error {
 	return nil
 }
 
+type Config struct {
+	Endpoint string
+	Token    string
+}
+
 type KongAdminAPIClient struct {
-	APIURL string
+	Config
 	client *http.Client
 }
 
 // New creates a new instance of the KongAdminAPIClient
-func New(baseURL string) *KongAdminAPIClient {
+func New(c Config) *KongAdminAPIClient {
 	// default to http if not included in URL
-	if !strings.HasPrefix(baseURL, "http") {
-		baseURL = "http://" + baseURL
+	if !strings.HasPrefix(c.Endpoint, "http") {
+		c.Endpoint = "http://" + c.Endpoint
 	}
 	return &KongAdminAPIClient{
-		APIURL: baseURL,
+		Config: c,
 		client: &http.Client{},
 	}
 }
