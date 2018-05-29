@@ -64,10 +64,6 @@ var rootCmd = &cobra.Command{
 	Use:   "kongadm",
 	Short: "A CLI tool for interacting with the Kong API",
 	Long:  "A CLI tool for interacting with the Kong API",
-	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		apiURLBase := viper.GetString("url")
-		client = api.New(apiURLBase, nil)
-	},
 }
 
 func init() {
@@ -75,8 +71,11 @@ func init() {
 }
 
 func initConfig() {
+	// set some sane defaults
 	viper.SetConfigName("config")
 	viper.AddConfigPath("$HOME/.kongadm")
+	viper.SetDefault("url", "http://localhost:8001")
+
 	// Create the config file if it does not exist
 	if _, err := os.Stat("$HOME/.kongadm/config"); os.IsNotExist(err) {
 		usr, _ := user.Current()
@@ -91,6 +90,17 @@ func initConfig() {
 		fmt.Printf("Fatal error reading config file: %s \n", err)
 		os.Exit(1)
 	}
+
+	// create the API client from the config options
+	var authStrategy api.KongAdminAPIAuthStrategy
+	if token := viper.GetString("auth.token"); token != "" {
+		authStrategy = api.TokenStrategy{Token: token}
+	}
+	if username, password := viper.GetString("auth.username"), viper.GetString("auth.password"); username != "" && password != "" {
+		authStrategy = api.BasicAuthStrategy{Username: username, Password: password}
+	}
+	apiURLBase := viper.GetString("url")
+	client = api.New(apiURLBase, authStrategy)
 }
 
 // Execute is the entrypoint for the CLI called from the main function
