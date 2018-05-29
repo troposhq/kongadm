@@ -66,13 +66,12 @@ var rootCmd = &cobra.Command{
 	Long:  "A CLI tool for interacting with the Kong API",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		apiURLBase := viper.GetString("url")
-		client = api.New(apiURLBase)
+		client = api.New(apiURLBase, nil)
 	},
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().String("url", "localhost:8001", "URL for the Kong Admin API")
 	viper.BindPFlag("url", rootCmd.PersistentFlags().Lookup("url"))
 }
 
