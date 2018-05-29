@@ -28,6 +28,10 @@ func (c KongAdminAPIClient) buildRequest(method, path string, query url.Values, 
 	u.RawQuery = query.Encode()
 
 	r, err := http.NewRequest(method, u.String(), b)
+	if c.AuthStrategy != nil {
+		fmt.Println("hello")
+		c.AuthStrategy.configure(r)
+	}
 
 	if err != nil {
 		log.Fatal(err)
@@ -61,18 +65,20 @@ func (c KongAdminAPIClient) makeRequest(r *http.Request, d interface{}) error {
 }
 
 type KongAdminAPIClient struct {
-	APIURL string
-	client *http.Client
+	APIURL       string
+	client       *http.Client
+	AuthStrategy KongAdminAPIAuthStrategy
 }
 
 // New creates a new instance of the KongAdminAPIClient
-func New(baseURL string) *KongAdminAPIClient {
+func New(baseURL string, authStrategy KongAdminAPIAuthStrategy) *KongAdminAPIClient {
 	// default to http if not included in URL
 	if !strings.HasPrefix(baseURL, "http") {
 		baseURL = "http://" + baseURL
 	}
 	return &KongAdminAPIClient{
-		APIURL: baseURL,
-		client: &http.Client{},
+		APIURL:       baseURL,
+		client:       &http.Client{},
+		AuthStrategy: authStrategy,
 	}
 }

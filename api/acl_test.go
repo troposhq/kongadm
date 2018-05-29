@@ -6,7 +6,7 @@ import (
 )
 
 func TestAssociateConsumers(t *testing.T) {
-	client := New("localhost:8001")
+	client := New("localhost:8001", nil)
 	consumer, _ := client.CreateConsumer(Consumer{Username: "alois"})
 	res, e := client.ACLAssociateConsumer(consumer.ID, "admins")
 	if e != nil {
