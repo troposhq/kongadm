@@ -7,7 +7,8 @@ import (
 
 func TestAssociateConsumers(t *testing.T) {
 	client := New("localhost:8001")
-	res, e := client.ACLAssociateConsumer("a9232e57-bda4-44d8-8c79-b0050f8ec217", "admins")
+	consumer, _ := client.CreateConsumer(Consumer{Username: "alois"})
+	res, e := client.ACLAssociateConsumer(consumer.ID, "admins")
 	if e != nil {
 		fmt.Println(e)
 		t.Error("Error associating consumer to acl")
@@ -16,4 +17,6 @@ func TestAssociateConsumers(t *testing.T) {
 	if res.Group != "admins" {
 		t.Error("Error associating consumer to acl")
 	}
+
+	client.DeleteConsumer(consumer.ID)
 }
