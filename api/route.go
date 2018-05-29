@@ -47,6 +47,15 @@ func (c KongAdminAPIClient) ListRoutes() (results ListRoutesResult, err error) {
 	return results, err
 }
 
+// UpdateRoute will update a Route object in Kong
+func (c KongAdminAPIClient) UpdateRoute(r Route) (o Route, err error) {
+	b, err := json.Marshal(r)
+	req := c.buildRequest("PATCH", "/routes/"+r.ID, nil, bytes.NewReader(b))
+	req.Header.Add("Content-Type", "application/json")
+	err = c.makeRequest(req, &o)
+	return r, err
+}
+
 // DeleteRoute will delete a Route object in Kong
 func (c KongAdminAPIClient) DeleteRoute(nameOrID string) (e error) {
 	req := c.buildRequest("DELETE", "/routes/"+nameOrID, nil, nil)
