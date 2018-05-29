@@ -19,6 +19,18 @@ func updateService(cmd *cobra.Command, args []string) {
 	prettyPrintStruct(service)
 }
 
+func updateRoute(cmd *cobra.Command, args []string) {
+	var err error
+
+	route, err = client.UpdateRoute(route)
+	if err != nil {
+		fmt.Println("Error updating Route: ", err.Error())
+		os.Exit(1)
+	}
+
+	prettyPrintStruct(route)
+}
+
 func init() {
 	rootCmd.AddCommand(updateCmd)
 
@@ -46,4 +58,10 @@ var updateServiceCmd = &cobra.Command{
 	Use:   "service",
 	Short: "Update a Service",
 	Run:   updateService,
+}
+
+var updateRouteCmd = &cobra.Command{
+	Use:   "route",
+	Short: "Update a Route",
+	Run:   updateRoute,
 }
