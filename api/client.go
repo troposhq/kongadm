@@ -29,7 +29,6 @@ func (c KongAdminAPIClient) buildRequest(method, path string, query url.Values, 
 
 	r, err := http.NewRequest(method, u.String(), b)
 	if c.AuthStrategy != nil {
-		fmt.Println("hello")
 		c.AuthStrategy.configure(r)
 	}
 

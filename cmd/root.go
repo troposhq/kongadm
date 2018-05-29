@@ -72,7 +72,6 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	viper.BindPFlag("url", rootCmd.PersistentFlags().Lookup("url"))
 }
 
 func initConfig() {
@@ -82,10 +81,8 @@ func initConfig() {
 	if _, err := os.Stat("$HOME/.kongadm/config"); os.IsNotExist(err) {
 		usr, _ := user.Current()
 		dir := usr.HomeDir
-		fmt.Println(dir)
 		os.MkdirAll(dir+"/.kongadm", 0755)
 		_, err = os.OpenFile(dir+"/.kongadm/config.yml", os.O_RDONLY|os.O_CREATE, 0644)
-		fmt.Println(err)
 	}
 
 	// Load the config file
