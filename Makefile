@@ -1,4 +1,4 @@
-.PHONY: test-down reset-dev reset-test
+.PHONY: test test-down reset-dev reset-test
 
 test:
 	docker-compose up -d
