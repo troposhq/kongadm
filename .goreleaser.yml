@@ -1,8 +1,12 @@
 builds:
-  - binary: drum-roll
+  - binary: kongadm
     goos:
       - windows
       - darwin
       - linux
     goarch:
       - amd64
+archive:
+  format: binary
+sign:
+  artifacts: none
