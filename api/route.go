@@ -47,6 +47,13 @@ func (c KongAdminAPIClient) ListRoutes() (results ListRoutesResult, err error) {
 	return results, err
 }
 
+// GetRoute gets a Route object
+func (c KongAdminAPIClient) GetRoute(id string) (result Route, err error) {
+	req := c.buildRequest("GET", fmt.Sprintf("/routes/%s", id), nil, nil)
+	err = c.makeRequest(req, &result)
+	return result, err
+}
+
 // UpdateRoute will update a Route object in Kong
 func (c KongAdminAPIClient) UpdateRoute(r Route) (o Route, err error) {
 	b, err := json.Marshal(r)
