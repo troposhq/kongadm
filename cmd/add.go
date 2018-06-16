@@ -91,7 +91,7 @@ func init() {
 	addRouteCmd.Flags().StringSliceVar(&route.Hosts, "hosts", make([]string, 0), "A list of domain names that match this Route. For example: example.com. At least one of hosts, paths, or methods must be set")
 	addRouteCmd.Flags().StringSliceVar(&route.Paths, "paths", make([]string, 0), "A list of paths that match this Route. For example: /my-path. At least one of hosts, paths, or methods must be set")
 	addRouteCmd.Flags().BoolVar(&route.StripPath, "strip-path", true, "When matching a Route via one of the paths, strip the matching prefix from the upstream request URL. Defaults to true")
-	addRouteCmd.Flags().BoolVar(&route.PreserveHost, "preserve-host", false, "When matching a Route via one of the hosts domain names, use the request Host header in the upstream request headers. By default set to false, and the upstream Host header will be that of the Service's host")
+	addRouteCmd.Flags().BoolVar(&route.PreserveHost, "preserve-host", true, "When matching a Route via one of the hosts domain names, use the request Host header in the upstream request headers. By default set to false, and the upstream Host header will be that of the Service's host")
 	addRouteCmd.Flags().StringVar(&route.Service.ID, "service", "", "The Service this Route is associated to. This is where the Route proxies traffic to")
 
 	// AddPlugin Command

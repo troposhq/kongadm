@@ -10,8 +10,9 @@ func TestAddRoute(t *testing.T) {
 		URL: "http://localhost:8001",
 	})
 	r, err := client.AddRoute(Route{
-		Paths:   []string{"/test"},
-		Service: service,
+		Paths:     []string{"/test"},
+		Service:   service,
+		StripPath: false,
 	})
 
 	if err != nil {

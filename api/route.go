@@ -21,8 +21,8 @@ type Route struct {
 	Hosts         []string `json:"hosts,omitempty"`
 	Paths         []string `json:"paths,omitempty"`
 	RegexPriority int      `json:"regex_priority,omitempty"`
-	PreserveHost  bool     `json:"preserve_host,omitempty"`
-	StripPath     bool     `json:"strip_path,omitempty"`
+	PreserveHost  bool     `json:"preserve_host"`
+	StripPath     bool     `json:"strip_path"`
 	Service       Service  `json:"service,omitempty"`
 }
 
