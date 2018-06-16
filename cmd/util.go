@@ -25,6 +25,9 @@ func unmarshalFile(filePath string, d interface{}) error {
 }
 
 func prettyPrintStruct(s interface{}) {
+	if quiet {
+		return
+	}
 	o, err := json.MarshalIndent(s, "", "  ")
 	if err != nil {
 		fmt.Println("Error pretty printing: " + err.Error())

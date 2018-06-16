@@ -57,6 +57,7 @@ var plugin api.Plugin
 var pluginConfig PluginConfig
 
 var filePath string
+var quiet bool
 
 var client *api.KongAdminAPIClient
 
@@ -67,6 +68,7 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
+	rootCmd.PersistentFlags().BoolVar(&quiet, "quiet", false, "Disable console output")
 	cobra.OnInitialize(initConfig)
 }
 
