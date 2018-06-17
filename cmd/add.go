@@ -87,9 +87,9 @@ func init() {
 	addCmd.AddCommand(addRouteCmd)
 	// AddRoute Flags
 	addRouteCmd.Flags().StringSliceVar(&route.Protocols, "protocols", []string{"http"}, "A list of the protocols this Route should allow. By default it is [\"http\", \"https\"], which means that the Route accepts both. When set to [\"https\"], HTTP requests are answered with a request to upgrade to HTTPS")
-	addRouteCmd.Flags().StringSliceVar(&route.Methods, "methods", []string{"GET"}, "A list of HTTP methods that match this Route. For example: [\"GET\", \"POST\"]. At least one of hosts, paths, or methods must be set")
-	addRouteCmd.Flags().StringSliceVar(&route.Hosts, "hosts", make([]string, 0), "A list of domain names that match this Route. For example: example.com. At least one of hosts, paths, or methods must be set")
-	addRouteCmd.Flags().StringSliceVar(&route.Paths, "paths", make([]string, 0), "A list of paths that match this Route. For example: /my-path. At least one of hosts, paths, or methods must be set")
+	addRouteCmd.Flags().StringSliceVar(&route.Methods, "methods", []string{}, "A list of HTTP methods that match this Route. For example: [\"GET\", \"POST\"]. At least one of hosts, paths, or methods must be set")
+	addRouteCmd.Flags().StringSliceVar(&route.Hosts, "hosts", []string{}, "A list of domain names that match this Route. For example: example.com. At least one of hosts, paths, or methods must be set")
+	addRouteCmd.Flags().StringSliceVar(&route.Paths, "paths", []string{}, "A list of paths that match this Route. For example: /my-path. At least one of hosts, paths, or methods must be set")
 	addRouteCmd.Flags().BoolVar(&route.StripPath, "strip-path", true, "When matching a Route via one of the paths, strip the matching prefix from the upstream request URL. Defaults to true")
 	addRouteCmd.Flags().BoolVar(&route.PreserveHost, "preserve-host", true, "When matching a Route via one of the hosts domain names, use the request Host header in the upstream request headers. By default set to false, and the upstream Host header will be that of the Service's host")
 	addRouteCmd.Flags().StringVar(&route.Service.ID, "service", "", "The Service this Route is associated to. This is where the Route proxies traffic to")
